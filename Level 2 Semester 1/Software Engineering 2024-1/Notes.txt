@@ -1,0 +1,162 @@
+<!-- * Software Engineering -->
+<!-- is the app of scientific and practical knowledge to invent , design , build , maintain , and improve frameworks , process -->
+
+<!-- *Importance of SWE -->
+<!-- Reduce Complexity
+        Decrease time 
+            Handling big Projects
+                Minmize software cost
+                    More Scalability-->
+
+<!-- *Software  -->
+<!-- A collection of integrated programs, data, and documentation that provides instructions to a computer -->
+
+<!-- *Importance of Software -->
+<!-- Drives business decision-making.
+
+            Basis for scientific research and engineering problem-solving.
+
+                Embedded in various systems (transportation, medical, telecommunications, etc.). -->
+
+<!-- *6 Characteristics of Software -->
+<!-- Flexible 
+            Complex problems
+                depends on hardware
+                    not wear out but /deteriorates/ over time
+                        Human-intensive construction
+                            /intangible/ and hard to measure-->
+
+<!-- *Software Principles -->
+<!-- deal with the process of SWE and final product
+            the right process produce the right product 
+                the desired product will also effect the choice of which process to use-->
+
+<!-- *SWE Activites -->
+<!-- Specification
+        Development : designing and programming
+            Validation :CHECK to  meets customer requirements
+                Evolution :modified to  meets the market requirements-->
+
+<!-- *Attributes of Good SWE -->
+<!-- Maintainability
+        Dependability : Reliable , secure , safe
+            Efficiency
+                Usability-->
+
+<!-- ** CH 2  -->
+
+<!-- *IS -->
+<!-- A set of components ( hard , soft , data , people , procedures ) Thata work together to produce quality information -->
+
+<!-- *SDLC : System Development Life Cycle -->
+<!-- 1 : Planning -->
+<!-- Review Project requests
+            Prioritize projects requests
+                Allocate resources
+                    identify the project team-->
+<!-- 2 : Analysis -->
+<!-- Conduct a feasibility study 
+            Perform detailed analysis : 
+                Study current system , determine user requirements , recommed solutions-->
+<!-- 3 : Design -->
+<!-- Acquire hardware and software -->
+<!-- Develop detailed system design -->
+<!-- 4 : implementation -->
+<!-- Develop programs 
+                install and test the new system
+                    Train users
+                        Convert to the new system-->
+<!-- 5 : Support -->
+<!--  Conduct post-implementation reviews
+                identify errors and /enhancements/
+                    Develop clearly defined standards
+                        Monitor system performance.-->
+
+<!-- *Feasibility Studies -->
+<!-- Economic : project cost-effective
+            Operational : is the system work in the current environment
+                Schedule : complete on time
+                    Technical : tech to build the system-->
+
+<!-- *Data and info gathering techniques -->
+<!-- Review documentation
+        joint-application-design : JAD sessions
+            Research
+                Conduct interviews
+                    /Observe/ processes
+                        use /questionnaires/-->
+
+<!-- *SDLC Models -->
+<!-- Waterfall Model: Linear and sequential, suitable for stable requirements.
+
+            Prototyping Model: Builds a prototype to understand requirements.
+
+                Iterative Model: Develops software in increments.
+
+                    Spiral Model: Combines prototyping and iterative development, focuses on risk management.
+
+                        V-Model: Emphasizes testing at each stage of development.
+
+                                Component-Based Development: Reuses existing software components. -->
+
+<!-- *Advantages and Disadvantages of SDLC Models -->
+<!-- Waterfall Model: Simple but inflexible.
+
+            Prototyping Model: Good for unclear requirements but can lead to scope creep.
+
+                Iterative Model: Allows for feedback but may require modifications to earlier increments.
+
+                    Spiral Model: Flexible but lacks strict standards. -->
+
+<!-- ** CH3 -->
+<!-- What is UML ? -->
+<!-- A standardized modeling language for constructing and documenting -->
+
+<!-- Diagrams -->
+<!-- Structure diagram : Class => show the logical structure of the system, including classes, attributes, and relationships. -->
+<!-- Behavior diagram : Use Case => Represent interactions between actors (users or systems) and the system 
+                Activity diagram => Describes step by step workflow (swimlanes)-->
+<!-- interaction diagram :Sequence => Show how objects communicate in terms of a sequence of messages. -->
+
+<!-- ** CH4 -->
+<!-- *Programming Style -->
+<!-- a way to write a code to make it readable , maintainable , efficient -->
+<!-- Naming /conventions/(اتفيقية) 
+                    Nesting : Avoid it be it make the code more complex
+                        Switch-case with default : include a default case in switch statement
+                        Empty if /while statement : avoid checking conditions without taking action-->
+
+<!-- *Monitoring and control for coding -->
+<!-- code reviews , inspections : to detect defects in the coding phase -->
+<!-- Logical and control defects => infinite loop , incorrect conditions -->
+<!-- Data operations defects: Incorrect array access, wrong  initialization, misuse of variables. -->
+<!-- Checklist: A list of items to check during code reviews, such as loop termination, array bounds, and variable usage->
+
+    <!-- Structured programming -->
+<!-- Methodology for write reliable , clear , easy - to -modify programs -->
+<!-- Single-entry and single-exit constructs: Ensures clear flow of control.
+                    Stepwise refinement: Breaking down functions into smaller, manageable parts.
+                        Three control constructs: Sequence, selection (if-else), and iteration (loops).
+                            Advantages: Easier to understand, verify, and test. -->
+
+<!-- *Verification Techniques -->
+<!-- Code inspections: Manual review of code to detect defects.
+                Unit testing: Testing individual modules or functions.
+                    Static analysis: Analyzing code without executing it to find potential errors.
+                        Dynamic analysis: Executing the program with test data to check behavior. -->
+
+Documentation: Collection of data and information about the system (reports,
+diagrams, programs, etc.). ///////////////////////// What is a Systems Analyst?
+/Responsible/ for designing and developing information systems. Acts as a bridge
+between users and IT professionals. ////////////////////////// What is a Project
+Team? A group of users, systems analysts, and IT professionals working on a
+project from start to finish. Led by a project leader who manages the budget and
+schedule. //////////////////////// Reasons to Create or Modify an Information
+System: Correct problems in the existing system. Improve the existing system.
+Respond to external mandates (e.g., new regulations). Stay competitive.
+///////////////////////// Request for System Services: A formal request for a
+new or modified information system : project request. /////////////////////////
+Unit Testing Unit testing involves testing individual units (functions, classes)
+of a program. Key points: Test cases: Select test data for normal and
+exceptional cases. Drivers and stubs: Used to simulate calling modules or
+replace undeveloped modules. Incremental testing: Test as you add new code.
