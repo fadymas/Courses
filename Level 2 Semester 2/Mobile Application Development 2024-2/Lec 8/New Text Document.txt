@@ -1,0 +1,24 @@
+*********************** Project Architecture (Best Practice) + Reusable components concepts ***********************
+
+-layout >> main big screen that have inner screens
+-models >> any class model that hold and manage your data
+-modules>> divide your projects into modules, each separate from other one, like login module, tasks module, bmi module
+-shared >> have any shared components, network deals, styles
+	-components >> reusable components
+		-components >> your dynamic built components
+		-constants  >> any constant repeated components
+	-network
+		-local  >>working with local APIs
+		-remote >>working with remote APIs 
+	-styles
+		-colors >> set APP colors, primary, secondary and so on.
+		-styles >> any shared styles, width, height, radius, padding, decorations, and so on
+
+
+*********************** SQL Lite DB ***********************
+>> Using Sqflite package
+>> Store structured data locally (like a database)
+>> Perform CRUD operations (Create, Read, Update, Delete)
+>> Persist data between app launches
+>> Use SQL queries directly
+>> Good for: Todo apps, Notes, User profiles, Cache, Settings, Offline 

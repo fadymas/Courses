@@ -1,0 +1,63 @@
+*********************************************Lecture 7 Notes******************************************
+
+Container VS Expander >> Expander: Tells its child to take all remaining space, Useful for responsive layouts
+		      >> Container: control its size explicitly with width and height
+
+Container wrapped inside Expanded in columns or rows >> to fill remaining spaces equally
+
+width: double.infinity >> make highest width value
+
+
+Need to style column item >> Wrap inside decoration and use decoration:BoxDecoration
+Example: decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Colors.grey[400] 
+                    ),
+
+padding: const EdgeInsets.all(20), >> use const for static views/settings to be ready at compile time and make app fast
+				   >> use padding as widget to apply item padding, usually used as parent to rows, columns, containers
+
+//Baseline alignment usually need type of baseline which is alphabetic
+crossAxisAlignment: CrossAxisAlignment.baseline,
+textBaseline: TextBaseline.alphabetic,
+
+
+FloatingActionButton(
+                              onPressed: ()=>{},
+                              backgroundColor: Colors.blue[400],
+                              foregroundColor: Colors.white,
+                              mini: true,
+                              child: Icon(Icons.minimize),
+                              )
+MaterialButton
+
+You need click on item that hasn't click event >> wrap inside GestureDetector widget
+
+value.round() // round double value
+
+
+***********************************************Lab changes***********************************************
+
+1- replace Male and Female Icons with asset images
+2- make CM is aligned to the baseline of 180 instead of align to end, what is the diff between align to end or baseline?
+3- the slider is not moving with your touch, What is the problem? Fix it!!
+4- Male and Female click toggle between them, Modify the code to make click on active option deselect it.
+5- use shape: const CircleBorder(), to make floatingButtons rounded
+6- Handle  plus/minus click for the last section
+7- in the result screen, make constructor to receive data from home screen. the data need to be received:
+	- Gender: Male or Female based on selection
+	- Age: age here
+	- Result of BMI based on this equation ()
+
+
+
+***********************************************Upcoming weeks***********************************************
+
+- Project Architecture [real world example from companies] [Reusable component]
+- Sqflite
+- APIs & Networking
+- Firebase and clouding
+- APP Distribution 
+
+
+
