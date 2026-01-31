@@ -1,0 +1,548 @@
+تمام، أنا قرأت كل الكلام الموجود في الصورة، وده شرح مبسّط + أمثلة عملية لكل جزء:
+
+📌 أولًا: نظرة عامة على Kubernetes
+
+الصورة بتشرح:
+
+ليه بنستخدم Kubernetes
+
+High Availability → الخدمة تفضل شغالة.
+
+Fault Tolerance → لو Node وقعت الخدمة تكمل.
+
+المفهوم الأساسي
+
+بدل ما تشغّل Microservice على جهاز واحد → تشغله على Cluster فيه أكتر من Machine.
+
+كل الآلات دي بتستخدم نفس الـ Resources Pool كأنها جهاز واحد كبير.
+
+📌 الـ Cluster بيتكون من إيه؟
+
+1. Control Plane (العقل المدبر)
+
+مسؤول عن:
+
+اتخاذ القرارات
+
+متابعة حالة الـ Cluster
+
+توزيع الحاويات على الماكينات (Nodes)
+
+مكوناته:
+
+🔹 API Server
+
+هو الـ Gatekeeper:
+
+بتتعامل معاه بأي أمر:
+kubectl apply -f pod.yaml
+
+بيعمل: 
+
+Authentication (401 Unauthorized)
+
+Authorization (403 Forbidden)
+
+Admission Control (400 Bad Request)
+
+🔹 etcd
+
+Database Key-Value فيها الحالة الحالية (state) لكل حاجة في الـ Cluster.
+مثال:
+
+مين شغّال؟ أي Pod موجود فين؟ CPU مستهلك قد إيه؟
+
+🔹 Scheduler
+
+يختار أفضل Node يشغّل عليها Pod جديد.
+
+مثال:
+لو Node1 فيها ضغط عالي → يروح يشغل الـ Pod على Node2.
+
+🔹 Controller Manager
+
+متابع مستمر للحالة: 
+
+لو Pod وقع يعمل واحد جديد.
+
+لو Replicas = 3 وهو شايف 2 → ينشئ الثالث.
+
+2. Worker Nodes
+
+الماكينات اللي بتشغّل ال containers فعلًا.
+
+جوّاها:
+
+Kubelet
+وكيل على الماكينة:
+
+بيستقبل أوامر من الـ Control Plane.
+
+يبدأ/يوقف الـ Pods.
+
+Container Runtime Docker أو containerd اللي بتشغّل الحاويات.
+
+Kube Proxy مسؤول عن network rules و load balancing جوّا الـ Cluster.
+
+📌 Pod
+
+أصغر وحدة Deploy في Kubernetes.
+
+ممكن يكون فيه Container واحد أو أكتر (مثل sidecar pattern).
+
+مثال:
+
+Pod فيه Nginx + Container بيعمل Logging
+
+📌 Orchestration Tools
+
+الصورة ذكرت أدوات تانية:
+
+Docker Swarm
+
+OpenShift
+
+AWS ECS
+
+GKE
+
+Mesos (قديم)
+
+لكن Kubernetes هو الأقوى.
+
+📌 العملية اللي بتحصل عند تشغيل Pod
+
+لما تعمل:
+kubectl apply -f pod.yaml 
+اللي بيتم:
+
+الطلب يروح للـ API Server
+
+API Server يتحقق (Auth + RBAC)
+
+API Server يخزّن الحالة في etcd → “عايز Pod جديد”
+
+Scheduler يدور على Node مناسبة
+
+يخبر Kubelet على الـ Node المختارة
+
+Kubelet يبدأ الـ Container Runtime → يشغّل الـ Pod
+
+API Server يتأكد من الحالة ويرجع يحدّث etcd إن الـ Pod Running
+
+📌 مثال عملي بسيط
+
+ملف Pod:
+
+apiVersion: v1 kind: Pod metadata: name: myapp spec: containers: - name: web image: nginx 
+
+الخطوات اللي بتحصل:
+
+kubectl apply -f myapp.yaml
+
+API Server يستقبل الطلب
+
+Scheduler يشوف: 
+
+Node1 80% CPU
+
+Node2 20% CPU
+→ يختار Node2
+
+يرسل لـ Kubelet “شغّل Nginx”
+
+Container Runtime يشغّل الـ container
+
+etcd تتحدّث:
+pod/myapp = Running
+
+📌 مثال حي من الواقع
+
+لو عندك microservice فيها:
+
+Frontend
+
+Backend
+
+Database
+
+ومشغلهم على 3 Pods:
+frontend-pod (3 replicas) backend-pod (2 replicas) db-pod (1 replica) 
+لو وقعت Node فيها backend، Kubernetes يعمل الآتي:
+
+etcd تسجّل “backend-pod-down”
+
+Controller يقول: “لازم يكون عندي 2”
+
+Scheduler يشغّل backend Pod جديد على Node تانية
+
+الخدمة تمشي بدون downtime
+
+🎉 لو عايز أشرح بالصورة خطوة بخطوة أو أعمل لك Whiteboard منظم بنفس الشكل، قولّي بس.
+
+تمام، أنا قرأت كل الكلام الموجود في الصورة، وده شرح مبسّط + أمثلة عملية لكل جزء:
+
+📌 أولًا: نظرة عامة على Kubernetes
+
+الصورة بتشرح:
+
+ليه بنستخدم Kubernetes
+
+High Availability → الخدمة تفضل شغالة.
+
+Fault Tolerance → لو Node وقعت الخدمة تكمل.
+
+المفهوم الأساسي
+
+بدل ما تشغّل Microservice على جهاز واحد → تشغله على Cluster فيه أكتر من Machine.
+
+كل الآلات دي بتستخدم نفس الـ Resources Pool كأنها جهاز واحد كبير.
+
+📌 الـ Cluster بيتكون من إيه؟
+
+1. Control Plane (العقل المدبر)
+
+مسؤول عن:
+
+اتخاذ القرارات
+
+متابعة حالة الـ Cluster
+
+توزيع الحاويات على الماكينات (Nodes)
+
+مكوناته:
+
+🔹 API Server
+
+هو الـ Gatekeeper:
+
+بتتعامل معاه بأي أمر:
+kubectl apply -f pod.yaml
+
+بيعمل: 
+
+Authentication (401 Unauthorized)
+
+Authorization (403 Forbidden)
+
+Admission Control (400 Bad Request)
+
+🔹 etcd
+
+Database Key-Value فيها الحالة الحالية (state) لكل حاجة في الـ Cluster.
+مثال:
+
+مين شغّال؟ أي Pod موجود فين؟ CPU مستهلك قد إيه؟
+
+🔹 Scheduler
+
+يختار أفضل Node يشغّل عليها Pod جديد.
+
+مثال:
+لو Node1 فيها ضغط عالي → يروح يشغل الـ Pod على Node2.
+
+🔹 Controller Manager
+
+متابع مستمر للحالة: 
+
+لو Pod وقع يعمل واحد جديد.
+
+لو Replicas = 3 وهو شايف 2 → ينشئ الثالث.
+
+2. Worker Nodes
+
+الماكينات اللي بتشغّل ال containers فعلًا.
+
+جوّاها:
+
+Kubelet
+وكيل على الماكينة:
+
+بيستقبل أوامر من الـ Control Plane.
+
+يبدأ/يوقف الـ Pods.
+
+Container Runtime Docker أو containerd اللي بتشغّل الحاويات.
+
+Kube Proxy مسؤول عن network rules و load balancing جوّا الـ Cluster.
+
+📌 Pod
+
+أصغر وحدة Deploy في Kubernetes.
+
+ممكن يكون فيه Container واحد أو أكتر (مثل sidecar pattern).
+
+مثال:
+
+Pod فيه Nginx + Container بيعمل Logging
+
+📌 Orchestration Tools
+
+الصورة ذكرت أدوات تانية:
+
+Docker Swarm
+
+OpenShift
+
+AWS ECS
+
+GKE
+
+Mesos (قديم)
+
+لكن Kubernetes هو الأقوى.
+
+📌 العملية اللي بتحصل عند تشغيل Pod
+
+لما تعمل:
+kubectl apply -f pod.yaml 
+اللي بيتم:
+
+الطلب يروح للـ API Server
+
+API Server يتحقق (Auth + RBAC)
+
+API Server يخزّن الحالة في etcd → “عايز Pod جديد”
+
+Scheduler يدور على Node مناسبة
+
+يخبر Kubelet على الـ Node المختارة
+
+Kubelet يبدأ الـ Container Runtime → يشغّل الـ Pod
+
+API Server يتأكد من الحالة ويرجع يحدّث etcd إن الـ Pod Running
+
+📌 مثال عملي بسيط
+
+ملف Pod:
+
+apiVersion: v1 kind: Pod metadata: name: myapp spec: containers: - name: web image: nginx 
+
+الخطوات اللي بتحصل:
+
+kubectl apply -f myapp.yaml
+
+API Server يستقبل الطلب
+
+Scheduler يشوف: 
+
+Node1 80% CPU
+
+Node2 20% CPU
+→ يختار Node2
+
+يرسل لـ Kubelet “شغّل Nginx”
+
+Container Runtime يشغّل الـ container
+
+etcd تتحدّث:
+pod/myapp = Running
+
+📌 مثال حي من الواقع
+
+لو عندك microservice فيها:
+
+Frontend
+
+Backend
+
+Database
+
+ومشغلهم على 3 Pods:
+frontend-pod (3 replicas) backend-pod (2 replicas) db-pod (1 replica) 
+لو وقعت Node فيها backend، Kubernetes يعمل الآتي:
+
+etcd تسجّل “backend-pod-down”
+
+Controller يقول: “لازم يكون عندي 2”
+
+Scheduler يشغّل backend Pod جديد على Node تانية
+
+الخدمة تمشي بدون downtime
+
+🎉 لو عايز أشرح بالصورة خطوة بخطوة أو أعمل لك Whiteboard منظم بنفس الشكل، قولّي بس.
+
+تمام يا فادي، هشرح كل جزء في الصورة بطريقة بسيطة + أمثلة عملية حقيقية زي اللي هتقابلها وإنت بتشتغل بـ Kubernetes.
+
+🔥 أولًا: kubectl
+
+kubectl هو الأداة اللي بتتعامل بيها مع الـ API Server.
+
+✔ مثال بسيط:
+
+kubectl get pods kubectl apply -f pod.yaml kubectl delete pod mypod 
+كل أمر من دول → بيروح للـ API Server على شكل HTTP Request + مصحوب بـ Bearer Token علشان الـ Auth.
+
+🔥 الرسمة الأولى:
+
+User → kubectl → API Server
+
+اللي بيحصل:
+
+إنت تكتب أمر:
+kubectl apply -f app.yaml 
+
+kubectl ياخد الـ YAML → يحوله Payload
+
+يبعت HTTP Request للـ API Server
+
+API Server يتأكد من:
+
+Bearer Token (هل اليوزر مسموح له؟)
+
+RBAC permissions
+
+🌟 مثال عملي:
+
+app.yaml
+
+apiVersion: v1 kind: Pod metadata: name: nginx spec: containers: - name: web image: nginx 
+
+تنفيذ:
+
+kubectl apply -f app.yaml 
+
+اللي يحصل:
+
+kubectl يبعته للـ API Server
+
+يخزن الحالة في etcd
+
+Scheduler يختار Node
+
+Pod يتشغّل
+
+🔥 KUBECONFIG
+
+الملف اللي بيخلي kubectl يعرف:
+
+مين اليوزر؟
+
+بيتصل بأي Cluster؟
+
+على أي Server؟
+
+باستخدام أي Certificate؟
+
+المكان الافتراضي:
+~/.kube/config 
+لكن ممكن تغيّره:
+export KUBECONFIG=/config3 
+
+🌟 مثال حقيقي لملف KUBECONFIG
+
+apiVersion: v1 kind: Config clusters: - name: cluster1 cluster: server: https://server.com:8080 certificate-authority-data: <encoded ca> users: - name: Kamel user: client-certificate-data: <cert> client-key-data: <key> contexts: - name: context1 context: cluster: cluster1 user: Kamel current-context: context1 
+
+🔥 Precedence – مين اللي بيتقرأ الأول؟
+
+لو عندك ٢ config:
+
+متغير البيئة: export KUBECONFIG=/config3 
+
+الملف الافتراضي: ~/.kube/config 
+
+الترتيب:
+
+KUBECONFIG
+
+~/.kube/config
+
+مثال:
+
+لو كتبت:
+kubectl get nodes 
+و KUBECONFIG بيوصل لسيرفر مش شغال →
+هتشوف:
+❌ Connection Refused
+
+🔥 ID / Invitation
+
+ده معناه إن الـ API Server مش Private — لازم تقول له:
+
+أنت مين؟ (user)
+
+عندك شهادة؟ (certificate)
+
+مسموح لك تعمل إيه؟ (RBAC)
+
+مثال بسيط: لو حاولت تعمل:
+kubectl get secrets 
+ومش عندك صلاحية →
+هتشوف:
+Error from server (Forbidden): secrets is forbidden 
+
+🔥 kubeconfig use-context
+
+لو عندك أكتر من Cluster، تختار بينهم:
+kubectl config get-contexts kubectl config use-context context1 
+
+🔥 kind — Kubernetes in Docker
+
+ده Tool بيشغّلك Kubernetes داخل Docker.
+
+مثال تشغيل Cluster:
+
+kind create cluster --name test 
+الشكل الناتج:
+
+master node
+
+worker node
+كلهم Docker containers.
+
+ده مناسب جدًا للتجارب.
+
+🔥 Pod
+
+أصغر وحدة في Kubernetes.
+
+الخصائص:
+
+بحتوي على Container(s)
+
+ليه Network interface خاص
+
+ماينفعش تعدّله بعد إنشائه ⇒ Pod is Immutable
+
+🌟 مثال بسيط:
+
+kubectl run test --image=nginx 
+لو عايز تغيّر إسم الـ Image؟
+ماينفعش تعمل:
+kubectl edit pod test 
+الكوليستر هيسمح بس مش هيطبق التعديل.
+الحل الصحيح:
+kubectl delete pod test kubectl run test --image=nginx:1.21 
+ده معنى:
+
+Pod is Immutable → أي تغيير = Pod جديد
+
+🔥 Health Checks
+
+1) Liveness Probe
+
+يتأكد إن التطبيق شغّال فعلًا.
+
+مثال:
+
+livenessProbe: httpGet: path: /health port: 8080 initialDelaySeconds: 5 periodSeconds: 10 
+لو /health رجعت Error → Pod هيتـRestart.
+
+2) Readiness Probe
+
+يتأكد إن التطبيق جاهز يستقبل requests.
+
+مثال:
+
+readinessProbe: httpGet: path: /ready port: 8080 
+لو الـ Probe Fail → Pod مش هيدخل في الـ Load Balancer.
+
+3) Startup Probe
+
+يتأكد إن التطبيق اشتغل أصلًا (مفيد للتطبيقات البطيئة).
+
+مثال:
+
+startupProbe: httpGet: path: /start port: 8080 failureThreshold: 30 periodSeconds: 5 
+
+🎯 عايز نسخة Whiteboard منظمة زي اللي في الصورة؟ أو عايزني أعملك نفس الخريطة لكن أحسن؟
